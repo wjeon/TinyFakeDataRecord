@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Reflection;
 using ADODB;
 
 namespace TinyFakeDataRecord
@@ -24,6 +25,29 @@ namespace TinyFakeDataRecord
         public Recordset ToRecordSet()
         {
             var recordSet = new Recordset();
+
+            foreach (var field in _metaData.Fields)
+            {
+                recordSet.Fields.Append(field.Name, field.AdodbDataType, field.DefinedSize, field.Attribute, null);
+            }
+
+            recordSet.Open(Missing.Value, Missing.Value, CursorTypeEnum.adOpenUnspecified, LockTypeEnum.adLockUnspecified, 0);
+
+            for (var i = 0; i < _records.Count; i++)
+            {
+                recordSet.AddNew(Missing.Value, Missing.Value);
+
+                for (var j = 0; j < _metaData.Fields.Length; j++)
+                {
+                    recordSet.Fields[j].Value = _records[i][j];
+                }
+
+                if (i == _records.Count - 1)
+                    recordSet.MoveFirst();
+                else
+                    recordSet.MoveNext();
+            }
+
             return recordSet;
         }
 
