@@ -8,6 +8,8 @@ namespace TinyFakeDataRecord.Tests.Unit
     public class FakeDataRecordsTests
     {
         private MetaData _testMetaData;
+        private List<object[]> _fakeData;
+
         [SetUp]
         public void SetUp()
         {
@@ -16,6 +18,12 @@ namespace TinyFakeDataRecord.Tests.Unit
                     new Field("First_Field", DataType.adInteger), 
                     new Field("Second_Field", DataType.adVarChar) 
                 });
+
+            _fakeData = new List<object[]>
+                {
+                    new object[] { 1, "First" },
+                    new object[] { 2, "Second" }
+                };
         }
 
         [Test]
@@ -30,26 +38,15 @@ namespace TinyFakeDataRecord.Tests.Unit
         [Test]
         public void When_pass_the_object_array_list_fake_data_in_the_constructor_it_creates_FakeDataRecords_with_the_passed_in_fake_data()
         {
-            var metaData = new MetaData(new Field[] {});
-            var fakeData = new List<object[]>
-                {
-                    new object[] { 1, "First" },
-                    new object[] { 2, "Second" }
-                };
-            var fakeDataRecords = new FakeDataRecords(metaData, fakeData);
+            var fakeDataRecords = new FakeDataRecords(_testMetaData, _fakeData);
             var records = fakeDataRecords.ToList();
-            Assert.That(records, Is.EqualTo(fakeData));
+            Assert.That(records, Is.EqualTo(_fakeData));
         }
 
         [Test]
         public void ToArray_converts_the_object_array_list_data_to_2_dimensional_array_data()
         {
-            var fakeData = new List<object[]>
-                {
-                    new object[] { 1, "First" },
-                    new object[] { 2, "Second" }
-                };
-            var fakeDataRecords = new FakeDataRecords(_testMetaData, fakeData);
+            var fakeDataRecords = new FakeDataRecords(_testMetaData, _fakeData);
             var records = fakeDataRecords.ToArray();
             var fakeDataArray = new object[,]
                 {
@@ -84,6 +81,20 @@ namespace TinyFakeDataRecord.Tests.Unit
         {
             var fakeDataRecords = new FakeDataRecords(_testMetaData);
             Assert.Throws<DataValidationException>(() => fakeDataRecords.AddRow(new object[] { 1, new DateTime(2015, 11, 25, 7, 37, 0) }));
+        }
+
+        [Test]
+        public void When_construct_and_number_of_fields_in_meta_data_and_number_of_fields_in_passing_in_data_record_not_matched_it_throws_DataValidationException()
+        {
+            Assert.Throws<DataValidationException>(() => new FakeDataRecords(_testMetaData, new List<object[]> { new object[] { 1 } }));
+        }
+
+        [Test]
+        public void When_construct_and_type_of_field_in_meta_data_and_type_of_field_in_passing_in_data_record_not_matched_it_throws_DataValidationException()
+        {
+            Assert.Throws<DataValidationException>(() => new FakeDataRecords(
+                _testMetaData, new List<object[]> { new object[] { 1, new DateTime(2015, 11, 25, 7, 37, 0) } }
+            ));
         }
     }
 }

@@ -16,6 +16,7 @@ namespace TinyFakeDataRecord
         public FakeDataRecords(MetaData metaData, IList<object[]> records)
         {
             _metaData = metaData;
+            ValidateData(records);
             _records = records;
         }
 
@@ -34,6 +35,14 @@ namespace TinyFakeDataRecord
             ValidateData(row);
 
             _records.Add(row);
+        }
+
+        private void ValidateData(IEnumerable<object[]> records)
+        {
+            foreach (var row in records)
+            {
+                ValidateData(row);
+            }
         }
 
         private void ValidateData(object[] row)
