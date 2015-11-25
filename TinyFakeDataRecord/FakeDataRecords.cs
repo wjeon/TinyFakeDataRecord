@@ -4,7 +4,7 @@ namespace TinyFakeDataRecord
 {
     public class FakeDataRecords
     {
-        private readonly List<object[]> _records;
+        private readonly IList<object[]> _records;
         private readonly MetaData _metaData;
 
         public FakeDataRecords(MetaData metaData)
@@ -13,7 +13,13 @@ namespace TinyFakeDataRecord
             _records = new List<object[]>();
         }
 
-        public List<object[]> ToList()
+        public FakeDataRecords(MetaData metaData, IList<object[]> records)
+        {
+            _metaData = metaData;
+            _records = records;
+        }
+
+        public IList<object[]> ToList()
         {
             return _records;
         }
