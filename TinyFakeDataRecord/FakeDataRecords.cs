@@ -43,6 +43,15 @@ namespace TinyFakeDataRecord
                     "The number of fields ({0}) in the row not matched with the number of fields ({1}) in meta data",
                     row.Length, _metaData.Fields.Length
                 ));
+
+            for (var i = 0; i < row.Length; i++)
+            {
+                if (row[i] != null && _metaData.Fields[i].Type != row[i].GetType())
+                    throw new DataValidationException(string.Format(
+                        "The type of the field ({0}) in the row not matched with the type of the field ({1}) in meta data",
+                        row[i].GetType(), _metaData.Fields[i].Type
+                    ));
+            }
         }
 
         private object[,] ConvertToArray(IList<object[]> records)

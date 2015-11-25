@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace TinyFakeDataRecord.Tests.Unit
@@ -76,6 +77,13 @@ namespace TinyFakeDataRecord.Tests.Unit
         {
             var fakeDataRecords = new FakeDataRecords(_testMetaData);
             Assert.Throws<DataValidationException>(() => fakeDataRecords.AddRow(new object[] { 1 }));
+        }
+
+        [Test]
+        public void When_type_of_field_in_meta_data_and_type_of_field_in_adding_row_not_matched_it_throws_DataValidationException()
+        {
+            var fakeDataRecords = new FakeDataRecords(_testMetaData);
+            Assert.Throws<DataValidationException>(() => fakeDataRecords.AddRow(new object[] { 1, new DateTime(2015, 11, 25, 7, 37, 0) }));
         }
     }
 }
