@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ADODB;
 using NUnit.Framework;
 
 namespace TinyFakeDataRecord.Tests.Unit
@@ -95,6 +96,15 @@ namespace TinyFakeDataRecord.Tests.Unit
             Assert.Throws<DataValidationException>(() => new FakeDataRecords(
                 _testMetaData, new List<object[]> { new object[] { 1, new DateTime(2015, 11, 25, 7, 37, 0) } }
             ));
+        }
+
+        [Test]
+        public void ToRecordSet_returns_adodb_recordset()
+        {
+            var metaData = new MetaData(new Field[] {});
+            var fakeDataRecords = new FakeDataRecords(metaData);
+            var recordset = fakeDataRecords.ToRecordSet();
+            Assert.That(recordset.GetType(), Is.EqualTo(typeof(RecordsetClass)));
         }
     }
 }

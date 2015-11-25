@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ADODB;
 
 namespace TinyFakeDataRecord
 {
@@ -18,6 +19,12 @@ namespace TinyFakeDataRecord
             _metaData = metaData;
             ValidateData(records);
             _records = records;
+        }
+
+        public Recordset ToRecordSet()
+        {
+            var recordSet = new Recordset();
+            return recordSet;
         }
 
         public object[,] ToArray()
