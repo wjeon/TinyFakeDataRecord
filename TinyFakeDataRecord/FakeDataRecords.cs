@@ -19,9 +19,29 @@ namespace TinyFakeDataRecord
             _records = records;
         }
 
+        public object[,] ToArray()
+        {
+            return ConvertToArray(_records);
+        }
+
         public IList<object[]> ToList()
         {
             return _records;
+        }
+
+        private object[,] ConvertToArray(IList<object[]> records)
+        {
+            var convertedRecords = new object[records.Count, _metaData.Fields.Length];
+
+            for (var i = 0; i < records.Count; i++)
+            {
+                for (var j = 0; j < _metaData.Fields.Length; j++)
+                {
+                    convertedRecords[i, j] = records[i][j];
+                }
+            }
+
+            return convertedRecords;
         }
     }
 }
