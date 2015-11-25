@@ -70,5 +70,12 @@ namespace TinyFakeDataRecord.Tests.Unit
                 };
             Assert.That(records, Is.EqualTo(fakeData));
         }
+
+        [Test]
+        public void When_number_of_fields_in_meta_data_and_number_of_fields_in_adding_row_not_matched_it_throws_DataValidationException()
+        {
+            var fakeDataRecords = new FakeDataRecords(_testMetaData);
+            Assert.Throws<DataValidationException>(() => fakeDataRecords.AddRow(new object[] { 1 }));
+        }
     }
 }

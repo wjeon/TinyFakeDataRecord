@@ -31,7 +31,18 @@ namespace TinyFakeDataRecord
 
         public void AddRow(object[] row)
         {
+            ValidateData(row);
+
             _records.Add(row);
+        }
+
+        private void ValidateData(object[] row)
+        {
+            if (_metaData.Fields.Length != row.Length)
+                throw new DataValidationException(string.Format(
+                    "The number of fields ({0}) in the row not matched with the number of fields ({1}) in meta data",
+                    row.Length, _metaData.Fields.Length
+                ));
         }
 
         private object[,] ConvertToArray(IList<object[]> records)
