@@ -1,4 +1,5 @@
-﻿using ADODB;
+﻿using System;
+using ADODB;
 
 namespace TinyFakeDataRecord
 {
@@ -16,5 +17,29 @@ namespace TinyFakeDataRecord
         public DataType DataType { get; private set; }
         public int DefinedSize { get; private set; }
         public FieldAttributeEnum Attribute { get; private set; }
+
+        public Type Type
+        {
+            get { return MapToType(DataType); }
+        }
+
+        private static Type MapToType(DataType dataType)
+        {
+            switch (dataType)
+            {
+                case DataType.adInteger:
+                    return typeof(int);
+                case DataType.adBigInt:
+                    return typeof(long);
+                case DataType.adDouble:
+                    return typeof(double);
+                case DataType.adVarChar:
+                    return typeof(string);
+                case DataType.adDate:
+                    return typeof(DateTime);
+                default:
+                    throw new DataTypeNotMappedException(dataType);
+            }
+        }
     }
 }
