@@ -23,6 +23,11 @@ namespace TinyFakeDataRecord
             get { return MapToType(DataType); }
         }
 
+        public DataTypeEnum AdodbDataType
+        {
+            get { return ConvertToAdodbDataType(DataType); }
+        }
+
         private static Type MapToType(DataType dataType)
         {
             switch (dataType)
@@ -40,6 +45,11 @@ namespace TinyFakeDataRecord
                 default:
                     throw new DataTypeNotMappedException(dataType);
             }
+        }
+
+        private static DataTypeEnum ConvertToAdodbDataType(DataType dataType)
+        {
+            return (DataTypeEnum)Enum.Parse(typeof(DataTypeEnum), dataType.ToString());
         }
     }
 }

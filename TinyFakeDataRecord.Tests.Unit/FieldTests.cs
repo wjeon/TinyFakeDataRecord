@@ -18,5 +18,17 @@ namespace TinyFakeDataRecord.Tests.Unit
 
             Assert.That(field.Type, Is.EqualTo(type));
         }
+
+        [TestCase(DataType.adInteger, DataTypeEnum.adInteger)]
+        [TestCase(DataType.adBigInt, DataTypeEnum.adBigInt)]
+        [TestCase(DataType.adDouble, DataTypeEnum.adDouble)]
+        [TestCase(DataType.adVarChar, DataTypeEnum.adVarChar)]
+        [TestCase(DataType.adDate, DataTypeEnum.adDate)]
+        public void AdodbDataType_property_returns_adodb_data_type_that_is_converted_from_field_data_type(DataType dataType, DataTypeEnum adodbDataType)
+        {
+            var field = new Field("Test_Field", dataType);
+
+            Assert.That(field.AdodbDataType, Is.EqualTo(adodbDataType));
+        }
     }
 }
