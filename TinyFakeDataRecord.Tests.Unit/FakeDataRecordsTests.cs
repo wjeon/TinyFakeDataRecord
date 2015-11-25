@@ -6,6 +6,17 @@ namespace TinyFakeDataRecord.Tests.Unit
     [TestFixture]
     public class FakeDataRecordsTests
     {
+        private MetaData _testMetaData;
+        [SetUp]
+        public void SetUp()
+        {
+            _testMetaData = new MetaData(new[]
+                {
+                    new Field("First_Field", DataType.adInteger), 
+                    new Field("Second_Field", DataType.adVarChar) 
+                });
+        }
+
         [Test]
         public void When_create_FakeDataRecords_it_constructs_with_meta_data_and_initializes_fake_data_records_with_object_arry_list()
         {
@@ -32,17 +43,12 @@ namespace TinyFakeDataRecord.Tests.Unit
         [Test]
         public void ToArray_converts_the_object_array_list_data_to_2_dimensional_array_data()
         {
-            var metaData = new MetaData(new []
-                {
-                    new Field("First_Field", DataType.adInteger), 
-                    new Field("Second_Field", DataType.adVarChar) 
-                });
             var fakeData = new List<object[]>
                 {
                     new object[] { 1, "First" },
                     new object[] { 2, "Second" }
                 };
-            var fakeDataRecords = new FakeDataRecords(metaData, fakeData);
+            var fakeDataRecords = new FakeDataRecords(_testMetaData, fakeData);
             var records = fakeDataRecords.ToArray();
             var fakeDataArray = new object[,]
                 {
@@ -50,6 +56,19 @@ namespace TinyFakeDataRecord.Tests.Unit
                     { 2, "Second" }
                 };
             Assert.That(records, Is.EqualTo(fakeDataArray));
+        }
+
+        [Test]
+        public void AddRow_adds_single_fake_data_row()
+        {
+            var fakeDataRecords = new FakeDataRecords(_testMetaData);
+            fakeDataRecords.AddRow(new object[] { 1, "First" });
+            var records = fakeDataRecords.ToList();
+            var fakeData = new List<object[]>
+                {
+                    new object[] { 1, "First" }
+                };
+            Assert.That(records, Is.EqualTo(fakeData));
         }
     }
 }

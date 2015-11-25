@@ -29,6 +29,11 @@ namespace TinyFakeDataRecord
             return _records;
         }
 
+        public void AddRow(object[] row)
+        {
+            _records.Add(row);
+        }
+
         private object[,] ConvertToArray(IList<object[]> records)
         {
             var convertedRecords = new object[records.Count, _metaData.Fields.Length];
