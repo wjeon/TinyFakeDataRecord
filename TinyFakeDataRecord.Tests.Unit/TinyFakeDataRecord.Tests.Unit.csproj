@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FakeDataRecordsTestBase.cs" />
     <Compile Include="FakeDataRecordsTests.cs" />
     <Compile Include="FieldTests.cs" />
     <Compile Include="MetaDataTests.cs" />
