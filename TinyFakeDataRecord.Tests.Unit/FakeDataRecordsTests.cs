@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using NUnit.Framework;
+using TinyFakeDataRecord.Tests.Unit.Extensions;
 
 namespace TinyFakeDataRecord.Tests.Unit
 {
@@ -99,6 +100,27 @@ namespace TinyFakeDataRecord.Tests.Unit
             } while (!recordset.EOF);
 
             Assert.That(returnedData, Is.EqualTo(FakeData));
+        }
+
+        [Test]
+        public void ToDataReader_returns_DataReader_with_the_fake_data()
+        {
+            var fakeDataRecords = new FakeDataRecords(MetaData, FakeData);
+            var result = new List<object[]>();
+
+            using (var reader = fakeDataRecords.ToDataReader())
+            {
+                while (reader.Read())
+                {
+                    result.Add(new object[]
+                    {
+                        reader.GetInt32(reader.GetOrdinal("First_Field")),
+                        reader.GetString(reader.GetOrdinal("Second_Field"))
+                    });
+                }
+            }
+
+            Assert.IsTrue(result.IsSequenceObjectEqualTo(FakeData));
         }
     }
 }

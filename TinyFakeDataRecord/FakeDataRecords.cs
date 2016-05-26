@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 using System.Reflection;
 using ADODB;
 
@@ -49,6 +50,11 @@ namespace TinyFakeDataRecord
             }
 
             return recordSet;
+        }
+
+        public IDataReader ToDataReader()
+        {
+            return new FakeDataReader(_metaData, _records);
         }
 
         public object[,] ToArray()
