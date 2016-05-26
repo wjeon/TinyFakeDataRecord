@@ -45,7 +45,10 @@ namespace TinyFakeDataRecord
 
         public bool Read()
         {
-            return ++_row < _records.Count / _metaData.Fields.Length;
+            if (!_isOpen)
+                throw new ReaderClosedException("Invalid attempt to Read when reader is closed.");
+
+            return ++_row < _records.Count;
         }
 
         public DataTable GetSchemaTable()
