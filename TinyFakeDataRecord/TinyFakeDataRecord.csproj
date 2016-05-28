@@ -47,6 +47,7 @@
     <Compile Include="DataTypeNotMappedException.cs" />
     <Compile Include="DataValidationException.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="FakeDataReader.cs" />
     <Compile Include="FakeDataRecords.cs" />
     <Compile Include="Field.cs" />
