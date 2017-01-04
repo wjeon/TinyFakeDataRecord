@@ -2,13 +2,13 @@
 <package >
   <metadata>
     <id>TinyFakeDataRecord</id>
-    <version>0.0.1.1</version>
+    <version>0.0.2.1-alpha</version>
     <authors>WJ</authors>
     <owners>WJ</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Tiny data records that create fake recordset for test</description>
-    <releaseNotes>Initial release with basic function that converts the fake data record to recordset.</releaseNotes>
-    <copyright>Copyright 2015</copyright>
+    <description>Tiny data records that create fake Recordset and DataReader for test</description>
+    <releaseNotes>Added ToDataReader method that converts the fake data record to DataReader.</releaseNotes>
+    <copyright>Copyright 2016</copyright>
     <tags>Tiny Fake Data Record</tags>
   </metadata>
   <files>

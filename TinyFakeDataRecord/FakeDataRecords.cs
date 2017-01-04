@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 using System.Reflection;
 using ADODB;
+using TinyFakeDataRecord.Extensions;
 
 namespace TinyFakeDataRecord
 {
@@ -51,6 +53,11 @@ namespace TinyFakeDataRecord
             return recordSet;
         }
 
+        public IDataReader ToDataReader()
+        {
+            return new FakeDataReader(_metaData, _records);
+        }
+
         public object[,] ToArray()
         {
             return ConvertToArray(_records);
@@ -86,10 +93,16 @@ namespace TinyFakeDataRecord
 
             for (var i = 0; i < row.Length; i++)
             {
-                if (row[i] != null && _metaData.Fields[i].Type != row[i].GetType())
+                if (row[i] == null)
+                    continue;
+
+                var fieldType = _metaData.Fields[i].Type;
+                var rowVlaueType = row[i].GetType();
+
+                if (!(fieldType == rowVlaueType || (fieldType.IsNumeric() && rowVlaueType.IsNumeric())))
                     throw new DataValidationException(string.Format(
                         "The type of the field ({0}) in the row not matched with the type of the field ({1}) in meta data",
-                        row[i].GetType(), _metaData.Fields[i].Type
+                        rowVlaueType, fieldType
                     ));
             }
         }

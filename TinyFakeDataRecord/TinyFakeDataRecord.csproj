@@ -46,10 +46,14 @@
     <Compile Include="DataType.cs" />
     <Compile Include="DataTypeNotMappedException.cs" />
     <Compile Include="DataValidationException.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="FakeDataReader.cs" />
     <Compile Include="FakeDataRecords.cs" />
     <Compile Include="Field.cs" />
     <Compile Include="MetaData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReaderClosedException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

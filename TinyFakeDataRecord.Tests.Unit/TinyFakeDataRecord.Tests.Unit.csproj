@@ -52,6 +52,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="Extensions\ObjectExtensions.cs" />
+    <Compile Include="FakeDataReaderTests.cs" />
+    <Compile Include="FakeDataRecordsTestBase.cs" />
     <Compile Include="FakeDataRecordsTests.cs" />
     <Compile Include="FieldTests.cs" />
     <Compile Include="MetaDataTests.cs" />
